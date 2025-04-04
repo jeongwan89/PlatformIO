@@ -1,11 +1,15 @@
 #include <Arduino.h>
 
 #include "kjwMotor.h"
+#include "ACS712Sensor.h"
 
 const int speedPin = 9; // PWM 핀
 const int directionPin = 8; // 디지털 핀
+const int analogPin = A1; // 아날로그 핀 A1
+const int sensorSensitivity = 185; // 5A 센서의 감도 (mV/A)
 
 kjwMotor motor(speedPin, directionPin);
+ACS712Sensor currentSensor(analogPin, sensorSensitivity);
 
 void setup()
 {
@@ -19,7 +23,7 @@ void setup()
 
 void loop()
 {
-    // 속도 테스트
+    // 속도 증가 테스트
     for (int speed = 0; speed <= 100; speed += 10)
     {
         motor.Speed(speed);
@@ -28,12 +32,7 @@ void loop()
         delay(1000);
     }
 
-    // 방향 전환 테스트
-    motor.ToggleDirection();
-    Serial.println("Direction Toggled");
-    delay(2000);
-
-    // 다시 속도 테스트
+    // 속도 감소 테스트
     for (int speed = 100; speed >= 0; speed -= 10)
     {
         motor.Speed(speed);
@@ -46,4 +45,34 @@ void loop()
     motor.ToggleDirection();
     Serial.println("Direction Toggled");
     delay(2000);
+
+    // 속도 증가 테스트
+    for (int speed = 0; speed <= 100; speed += 10)
+    {
+        motor.Speed(speed);
+        Serial.print("Speed: ");
+        Serial.println(speed);
+        delay(1000);
+    }
+
+    // 속도 감소 테스트
+    for (int speed = 100; speed >= 0; speed -= 10)
+    {
+        motor.Speed(speed);
+        Serial.print("Speed: ");
+        Serial.println(speed);
+        delay(1000);
+    }
+
+    // 방향 전환 테스트
+    motor.ToggleDirection();
+    Serial.println("Direction Toggled");
+    delay(2000);
+
+    // ACS712Sensor 테스트 코드
+    float current = currentSensor.readCurrent(); // 전류 값 읽기
+    Serial.print("Current: ");
+    Serial.print(current);
+    Serial.println(" A");
+    delay(1000); // 1초마다 값 읽기
 }
