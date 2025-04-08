@@ -1,16 +1,20 @@
 #include <Arduino.h>
+#include <TM1637Display.h>
 
 #include "kjwMotor.h"
 #include "ACS712Sensor.h"
 
 const int speedPin = 9; // PWM 핀
 const int directionPin = 8; // 디지털 핀
-const int analogPin = A1; // 아날로그 핀 A1
+const int analogPin = A2; // 아날로그 핀 A1
 const int sensorSensitivity = 185; // 5A 센서의 감도 (mV/A)
 const int analogSpeedPin = A0; // 추가된 아날로그 핀 A0
+const int CLK = 4; // TM1637 CLK 핀
+const int DIO = 5; // TM1637 DIO 핀
 
 kjwMotor motor(speedPin, directionPin);
 ACS712Sensor currentSensor(analogPin, sensorSensitivity);
+TM1637Display display(CLK, DIO);
 
 void setup()
 {
@@ -20,6 +24,8 @@ void setup()
     // 초기 속도와 방향 설정
     motor.Speed(50); // 속도 50%
     motor.Dir(CW); // 시계 방향
+
+    display.setBrightness(7); // 디스플레이 밝기 설정 (0~7)
 }
 
 void loop()
@@ -81,4 +87,9 @@ void loop()
     Serial.print(current);
     Serial.println(" A");
     delay(1000); // 1초마다 값 읽기
+
+    // TM1637 디스플레이에 전류 값 표시
+    int displayValue = static_cast<int>(current * 100); // 전류 값을 소수점 두 자리까지 정수로 변환
+    display.showNumberDec(displayValue, true, 4, 0); // 4자리로 표시
+    delay(1000); // 1초마다 업데이트
 }
