@@ -6,6 +6,20 @@ ACS712Sensor::ACS712Sensor(int analogPin, float sensitivity)
     pinMode(_analogPin, INPUT);
 }
 
+ACS712Sensor::ACS712Sensor(int analogPin, const String &sensorType)
+{
+    _analogPin = analogPin;
+    if (sensorType == "05A")
+        _sensitivity = 185.0; // 5A 센서의 감도 (mV/A)
+    else if (sensorType == "20A")
+        _sensitivity = 100.0; // 20A 센서의 감도 (mV/A)
+    else if (sensorType == "30A")
+        _sensitivity = 66.0; // 30A 센서의 감도 (mV/A)
+    else
+        _sensitivity = 185.0; // 기본값: 5A 센서
+    pinMode(_analogPin, INPUT);
+}
+
 float ACS712Sensor::readCurrent()
 {
     int rawValue = analogRead(_analogPin); // 아날로그 값 읽기

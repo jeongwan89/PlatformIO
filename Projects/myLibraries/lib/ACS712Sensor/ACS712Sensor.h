@@ -16,9 +16,11 @@ class ACS712Sensor
 public:
     // 생성자: 아날로그 핀 번호와 센서의 감도(mV/A)를 설정
     ACS712Sensor(int analogPin, float sensitivity);
+    ACS712Sensor(int analogPin, const String &sensorType);
 
     // 전류 값을 읽어오는 함수 (단위: 암페어)
     float readCurrent();
+    int readRawValue() { return analogRead(_analogPin); } // 아날로그 핀에서 원시 값 읽기
 
 private:
     int _analogPin;       // 아날로그 핀 번호
