@@ -7,8 +7,8 @@
 const int speedPin = 9; // PWM 핀
 const int directionPin = 8; // 디지털 핀
 const int analogSpeedPin = A0; // 추가된 아날로그 핀 A0
-const int imACSPin = A2; // 아날로그 핀 A1
-const int moduleACSPin = A1; // 아날로그 핀 A0
+const int imACSPin = A2; // 아날로그 핀 A2
+const int moduleACSPin = A1; // 아날로그 핀 A1
 const int sensorSensitivity5A = 185; // 5A 센서의 감도 (mV/A)
 const int sensorSensitivity20A = 100; // 20A 센서의 감도 (mV/A)
 const int CLK = 4; // TM1637 CLK 핀
