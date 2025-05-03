@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <TM1637Display.h>
+#include <TM1637Float.h>
 
-#include "kjwMotor.h"
-#include "ACS712Sensor.h"
+#include <kjwMotor.h>
+#include <ACS712Sensor.h>
 
 const int speedPin = 9; // PWM 핀
 const int directionPin = 8; // 디지털 핀
@@ -18,6 +19,7 @@ kjwMotor motor(speedPin, directionPin);
 ACS712Sensor currentSensor(imACSPin, sensorSensitivity5A);
 // ACS712Sensor curentSensorModule(moduleACSPin, sensorSensitivity20A);
 TM1637Display display(CLK, DIO);
+TM1637Float tm1637Float;
 float readCurrent(ACS712Sensor &sensor);
 void test1(void);
 void test2(void);
@@ -69,7 +71,8 @@ void test1(void)
         Serial.print("Speed: ");
         Serial.println(speed);
         delay(1000);
-        display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
+        tm1637Float.displayFloat(display, readCurrent(currentSensor), 2); // 소수점 1자리로 표시
+        // display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
     }
 
     // 속도 감소 테스트
@@ -79,7 +82,8 @@ void test1(void)
         Serial.print("Speed: ");
         Serial.println(speed);
         delay(1000);
-        display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
+        tm1637Float.displayFloat(display, readCurrent(currentSensor), 2); // 소수점 1자리로 표시
+        // display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
     }
 
     // 방향 전환 테스트
@@ -93,7 +97,8 @@ void test1(void)
         Serial.print("Speed: ");
         Serial.println(speed);
         delay(1000);
-        display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
+        tm1637Float.displayFloat(display, readCurrent(currentSensor), 2); // 소수점 1자리로 표시
+        // display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
     }
 
     // 속도 감소 테스트
@@ -103,7 +108,8 @@ void test1(void)
         Serial.print("Speed: ");
         Serial.println(speed);
         delay(1000);
-        display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
+        tm1637Float.displayFloat(display, readCurrent(currentSensor), 2); // 소수점 1자리로 표시
+        // display.showNumberDecEx( (int) (readCurrent(currentSensor) * 100), 0x40, true, 4, 0); // 4자리로 표시
     }
 
     // 방향 전환 테스트
