@@ -28,6 +28,12 @@ public:
     // toggle direction
     void ToggleDirection();
 
+    // get direction
+    int GetDirection();
+
+    // get speed
+    int GetSpeed();
+    
 private:
     int _speedPin;
     int _directionPin;

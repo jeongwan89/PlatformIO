@@ -60,3 +60,12 @@ void kjwMotor::ToggleDirection()
     }
     Dir(_currentDirection);
 }
+int kjwMotor::GetDirection()
+{
+    return _currentDirection;
+}
+
+int kjwMotor::GetSpeed()
+{
+    return analogRead(_speedPin);
+}
