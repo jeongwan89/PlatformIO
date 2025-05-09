@@ -28,6 +28,7 @@ void kjwMotor::SetDirectionPin(int directionPin)
     pinMode(_directionPin, OUTPUT);
 }
 
+// speed : 0 ~ 100
 void kjwMotor::Speed(int speed)
 {
     if (speed < 0) speed = 0;
@@ -59,6 +60,24 @@ void kjwMotor::ToggleDirection()
         _currentDirection = CCW;
     }
     Dir(_currentDirection);
+}
+
+void kjwMotor::softToggleDirection()
+{
+    int motorSpeed = GetSpeed();
+
+    for (int i = motorSpeed; i >= 0; i -= 10)
+    {
+        Speed(map(i, 0, 1023, 0, 100));
+        delay(6);
+    }
+    ToggleDirection();
+    for (int i = 0; i <= motorSpeed; i += 10)
+    {
+        Speed(map(i, 0, 1023, 0, 100));
+        delay(6);
+    }
+    // Set the speed back to the original value
 }
 int kjwMotor::GetDirection()
 {

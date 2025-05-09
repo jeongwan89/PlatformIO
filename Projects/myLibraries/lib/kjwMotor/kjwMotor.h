@@ -28,6 +28,9 @@ public:
     // toggle direction
     void ToggleDirection();
 
+    // soft toggle direction
+    void softToggleDirection();
+
     // get direction
     int GetDirection();
 

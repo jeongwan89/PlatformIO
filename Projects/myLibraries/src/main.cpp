@@ -208,7 +208,7 @@ void ToggleDirection(kjwMotor &motor, TM1637Float &display)
     for(int i = motor.GetSpeed() - 1 ; i >= 1; i -= 10)
     {
         motor.Speed(map(i, 0, 1023, 0, 100));
-        delay(6);
+        // delay(6);
         display.showNumberDec(i); // 소수점 1자리로 표시
     }
     // 방향 전환
@@ -218,7 +218,7 @@ void ToggleDirection(kjwMotor &motor, TM1637Float &display)
     for(int i = 0; i <= motorSpd; i += 10)
     {
         motor.Speed(map(i, 0, 1023, 0, 100));
-        delay(6);
+        // delay(6);
         display.showNumberDec(i); // 소수점 1자리로 표시
     }
 }
