@@ -29,8 +29,10 @@ public:
     void ToggleDirection();
 
     // soft toggle direction
-    void softToggleDirection();
-
+    void softToggleDirection(int step = 10); // milliseconds
+    // (x)TODO : 감속/가속 step 인수를 받아서 가속도 조정이 가능하게
+    //    TODO : 현재의 상태를 monitoring 할 수 있는 인수 추가
+    
     // get direction
     int GetDirection();
 

@@ -49,6 +49,7 @@ void kjwMotor::Dir(int direction)
     }
 }
 
+
 void kjwMotor::ToggleDirection()
 {
     if (_currentDirection == CCW)
@@ -62,17 +63,17 @@ void kjwMotor::ToggleDirection()
     Dir(_currentDirection);
 }
 
-void kjwMotor::softToggleDirection()
+void kjwMotor::softToggleDirection(int step)
 {
     int motorSpeed = GetSpeed();
 
-    for (int i = motorSpeed; i >= 0; i -= 10)
+    for (int i = motorSpeed; i >= 0; i -= step)
     {
         Speed(map(i, 0, 1023, 0, 100));
         delay(6);
     }
     ToggleDirection();
-    for (int i = 0; i <= motorSpeed; i += 10)
+    for (int i = 0; i <= motorSpeed; i += step)
     {
         Speed(map(i, 0, 1023, 0, 100));
         delay(6);

@@ -6,9 +6,6 @@
 #include <INA219_WE.h>
 #include "promini_motor_ctrl_ina219.h"
 
-// function prototypes
-void ina219_init(void);
-
 kjwMotor motor(SPEEDPIN, DIRECTIONPIN);
 TM1637Float display(CLK, DIO);
 INA219_WE ina219(I2C_ADDRESS);
@@ -21,17 +18,27 @@ void setup() {
     pinMode(TACTICALSW, INPUT_PULLUP);
     analogWrite(SPEEDPIN, 0);
     
-    ina219_init(); // sensor 초기화
+    ina219_init(ina219); // sensor 초기화
     Serial.begin(115200);
 }
 
 void loop() {
+    // 모터 긴급 정지 스위치가 눌림?
     int motorState = digitalRead(TOGGLESW);
     if (motorState == HIGH) {
         motor.Speed(0);
         Serial.println("Stop switch is pressed. Motor stopped.");
         return;
     }
+    // 방향 push button이 눌림?
+    int tacticalState = digitalRead(TACTICALSW);
+    if (tacticalState == LOW) {
+        motor.softToggleDirection();
+        Serial.println("Tactical switch pressed. Motor direction toggled.");
+        delay(500); // Debounce delay
+        return;
+    }
+    // 긴급 처리가 없으면 모터 동작
     motor.Speed(map(analogRead(ANALOGSPEEDPIN), 0, 1023, 0, 100));
     static float current_mA = 0.0;
     current_mA = ina219.getCurrent_mA();
@@ -39,13 +46,3 @@ void loop() {
     display.displayFloat(current_mA, 0);    
 }
 
-void ina219_init() {
-    // INA219 초기화
-    if (!ina219.init()) {
-        Serial.println("Failed to find INA219 chip. Check wiring!");
-        while (1) {
-            delay(10); // 무한 대기
-        }
-    }
-    ina219.setShuntSizeInOhms(0.1); // 션트 저항 값 설정 (0.1옴)
-}
