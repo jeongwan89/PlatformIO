@@ -19,7 +19,7 @@ void setup() {
     analogWrite(SPEEDPIN, 0);
     
     ina219_init(ina219); // sensor 초기화
-    Serial.begin(115200);
+    Serial.begin(57600);
 }
 
 void loop() {
